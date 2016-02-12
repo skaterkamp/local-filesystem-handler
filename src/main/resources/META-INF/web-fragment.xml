@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-fragment
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd"
+	version="3.0">
+
+	<name>lfs-resourcehandler</name>
+
+	<distributable />
+	<ordering>
+		<after>
+			<others />
+		</after>
+	</ordering>
+
+	<servlet>
+		<servlet-name>LFS Resources</servlet-name>
+		<servlet-class>de.katerkamp.streichelzoo.LocalFileSystemResourcesServlet</servlet-class>
+	</servlet>
+	<!-- Servlet mapping can be overwritten if it gets specified in web.xml again. 
+	Web.xml is read first and takes precedence. The then 2nd servlet mapping
+	in this fragment file here will be ignored then.  -->
+	<servlet-mapping>
+		<servlet-name>LFS Resources</servlet-name>
+		<url-pattern>/res/*</url-pattern>
+	</servlet-mapping>
+	<!-- Local file system dir where facelets and resources reside -->
+	<context-param>
+		<param-name>de.katerkamp.streichelzoo.FACELETS_DIR</param-name>
+		<param-value>/var/www/faces</param-value>
+	</context-param>
+
+</web-fragment>

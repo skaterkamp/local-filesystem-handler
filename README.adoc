@@ -1,0 +1,48 @@
+= Local File System Resource Handler
+Stefan Katerkamp <https://github.com/skaterkamp/>
+v1.0, 2016-02-11
+ifdef::basebackend-docbook[:doctype: book]
+:license: https://github.com/skaterkamp/local-filesystem-resourcehandler/LICENSE[MIT]
+:idprefix:
+:idseparator: -
+
+Resourcehandler module which adds the local file system as resource for
+Facelets. This allows to store facelets in a directory tree in the local
+file system, and use it on top of the regular war file resources. If the view 
+request does not find a resource in the war file, it looks in the file system
+and tries to find the resource there.
+
+== Build
+
+Download from github, change to the project dir and run
+
+----
+mvn install
+----
+
+== Usage
+
+Include this in your local Maven webapp project as a dependency:
+
+----
+<dependency>
+    <groupId>de.katerkamp.streichelzoo</groupId>
+    <artifactId>local-filesystem-resourcehandler</artifactId>
+    <version>1.0</version>
+<dependency>
+----
+
+(This module is not (yet) available in a public Maven Nexus repository. It needs
+to be build locally, installed and loaded from a local repo.)
+
+Build and deploy webapp to your Java EE container like Wildfly.
+
+----
+mkdir -p /var/www/faces/res
+----
+
+Copy .xhtml facelets to /var/www/faces. Copy images and such to /var/www/faces/res/.
+
+If resources in webapp war and in the local file system have an idential URL path,
+then the resource in the webapp has precedence.
+
