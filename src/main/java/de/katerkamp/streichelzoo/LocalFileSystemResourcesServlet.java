@@ -29,7 +29,9 @@ public class LocalFileSystemResourcesServlet extends FileServlet {
 
 	@Override
 	public void init() throws ServletException {
-		getServletContext();
+		ResourceHandlerUtils.getInstance().setFaceletsDir(
+			getServletContext().getInitParameter(
+					ResourceHandlerProperties.FACELETS_DIR));
 		faceletsDir = ResourceHandlerUtils.getInstance().getFaceletsDir();
 	}
 

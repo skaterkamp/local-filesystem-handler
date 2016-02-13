@@ -58,6 +58,14 @@ public class LocalFileSystemFaceletsHandlerTest {
 	public void testCreateViewResource() throws IOException {
 
 		System.out.println("createViewResource");
+
+		Path resourcePath = Files.createTempFile(null, null);
+		Path faceletsDir = resourcePath.getParent();
+		System.out.println("Test faceletsDir: " + faceletsDir.toString());
+		ResourceHandlerUtils.getInstance().setFaceletsDir(faceletsDir.toString());
+		Assert.assertEquals(faceletsDir, ResourceHandlerUtils.getInstance().getFaceletsDir());
+
+		// Mockito setup will call ResourceHandlerUtils.getInstance
 		FacesContext context = ContextMocker.mockFacesContext();
 		Map<String, Object> session = new HashMap<>();
 		ExternalContext ext = Mockito.
@@ -66,15 +74,12 @@ public class LocalFileSystemFaceletsHandlerTest {
 		Mockito.when(context.getExternalContext()).thenReturn(ext);
 
 		LocalFileSystemFaceletsHandler instance = new LocalFileSystemFaceletsHandler(null);
-		ResourceHandlerUtils rhu = ResourceHandlerUtils.getInstance();
 
-		Path resourcePath = Files.createTempFile(null, null);
-		Path faceletsDir = resourcePath.getParent();
-		rhu.setFaceletsDir(faceletsDir);
 		String resourceName = resourcePath.getFileName().toString();
 		URL expResultURL = resourcePath.toUri().toURL();
 
-		System.out.println("Resource name " + resourceName + " in " + rhu.getFaceletsDir().toString());
+		System.out.println("Resource name " + resourceName + " in " 
+				+ ResourceHandlerUtils.getInstance().getFaceletsDir().toString());
 
 		ViewResource result = instance.createViewResource(resourceName);
 		Assert.assertNotNull(result);

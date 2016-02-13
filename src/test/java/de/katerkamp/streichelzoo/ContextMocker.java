@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Stefan Katerkamp. All rights reserved.
+ * Copyright (c) 2016 Stefan Katerkamp. All rights reserved.
  * 
  * Original Author: Stefan Katerkamp <info@katerkamp.de>
  */
@@ -20,6 +20,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 /**
+ * Stub for FacesContext mock.
  *
  * @author Stefan Katerkamp <stefan@katerkamp.de>
  */

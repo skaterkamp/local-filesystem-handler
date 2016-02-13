@@ -18,15 +18,9 @@ public class ResourceHandlerUtils {
 	
 	private static ResourceHandlerUtils instance = null;
 	static final String FACELETS_DIR_DEFAULT = "/var/www/faces";
-	private Path faceletsDir;
+	private Path faceletsDir = null;
 
 	private ResourceHandlerUtils() {
-		String dirName = Faces.getInitParameter(ResourceHandlerProperties.FACELETS_DIR);
-		if (dirName != null && !dirName.isEmpty()) {
-			faceletsDir = Paths.get(dirName);
-		} else {
-			faceletsDir = Paths.get(FACELETS_DIR_DEFAULT);
-		}
 	}
 
 	public static ResourceHandlerUtils getInstance() {
@@ -40,7 +34,16 @@ public class ResourceHandlerUtils {
 		return faceletsDir;
 	}
 
-	public void setFaceletsDir(Path faceletsDir) {
-		this.faceletsDir = faceletsDir;
+	public void setFaceletsDir(String faceletsDirName) {
+		System.out.println("FD " + faceletsDir + " FDN " + faceletsDirName);
+		if (faceletsDir != null) {
+			System.out.println("FD not null");
+			return;
+		}
+		if (faceletsDirName != null && !faceletsDirName.isEmpty()) {
+			faceletsDir = Paths.get(faceletsDirName);
+		} else {
+			faceletsDir = Paths.get(FACELETS_DIR_DEFAULT);
+		}
 	}
 }

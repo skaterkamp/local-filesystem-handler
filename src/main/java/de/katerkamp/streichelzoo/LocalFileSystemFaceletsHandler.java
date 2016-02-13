@@ -18,6 +18,7 @@ import javax.faces.application.ResourceHandler;
 import javax.faces.application.ViewResource;
 import javax.faces.context.FacesContext;
 import javax.faces.application.Resource;
+import org.omnifaces.util.Faces;
 
 /**
  * Resource handler for inclusion of faclets in a directory tree.
@@ -29,9 +30,13 @@ public class LocalFileSystemFaceletsHandler
 
 	private final ResourceHandler wrapped;
 	private static final Logger LOGGER = Logger.getLogger(LocalFileSystemFaceletsHandler.class.getName());
+	private final Path faceletsDir;
 
 	public LocalFileSystemFaceletsHandler(ResourceHandler wrapped) {
 		this.wrapped = wrapped;
+		ResourceHandlerUtils.getInstance().setFaceletsDir(Faces.getInitParameter(
+						ResourceHandlerProperties.FACELETS_DIR));
+		faceletsDir = ResourceHandlerUtils.getInstance().getFaceletsDir();
 	}
 
 	@Override
@@ -39,12 +44,11 @@ public class LocalFileSystemFaceletsHandler
 		return wrapped;
 	}
 
-
 	/**
 	 * Create view resource for LFS, return null if file does not exist.
-	 * 
+	 *
 	 * @param resourceName
-	 * @return 
+	 * @return
 	 */
 	ViewResource createViewResource(String resourceName) {
 
@@ -52,8 +56,7 @@ public class LocalFileSystemFaceletsHandler
 		if (resourcePath.isAbsolute()) {
 			resourcePath = resourcePath.getRoot().relativize(resourcePath);
 		}
-		Path absoluteResourcePath = ResourceHandlerUtils.getInstance()
-				.getFaceletsDir().resolve(resourcePath);
+		Path absoluteResourcePath = faceletsDir.resolve(resourcePath);
 		if (!Files.exists(absoluteResourcePath)) {
 			return null;
 		}
